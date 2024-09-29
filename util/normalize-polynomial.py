@@ -1,8 +1,7 @@
 # might not be perfect but kind of works
 
 
-def normalize_polynomial(ranges, coefficients, exponents):
-    # Validate input lengths
+def normalize_polynomial(ranges, coefficients, exponents, value_labels):
     if not (len(ranges) == len(coefficients) == len(exponents)):
         raise ValueError(
             "The lengths of ranges, coefficients, and exponents must be equal."
@@ -30,20 +29,23 @@ def normalize_polynomial(ranges, coefficients, exponents):
 
     # Print original polynomial
     print("Original Polynomial:")
-    print_polynomial(coefficients, exponents)
+    print_polynomial(coefficients, exponents, value_labels)
 
     # Print normalized polynomial
     print("\nNormalized Polynomial:")
-    print_polynomial(normalized_coeffs, exponents)
+    print_polynomial(normalized_coeffs, exponents, value_labels)
 
     # Return normalized coefficients and exponents
     return normalized_coeffs, exponents
 
 
-def print_polynomial(coefficients, exponents):
+def print_polynomial(coefficients, exponents, value_labels):
     terms = []
-    for i, (a_i, n_i) in enumerate(zip(coefficients, exponents), 1):
-        term = term_to_string(a_i, f"x_{i}", n_i)
+    for i, (a_i, n_i) in enumerate(zip(coefficients, exponents)):
+        variable = (
+            value_labels[i] if value_labels and i < len(value_labels) else f"x_{i+1}"
+        )
+        term = term_to_string(a_i, variable, n_i)
         if term:
             terms.append(term)
     polynomial = " + ".join(terms)
@@ -55,37 +57,40 @@ def term_to_string(coefficient, variable, exponent):
     if coefficient == 0:
         return ""
     # Format coefficient
-    coeff_str = f"{coefficient:.6g}"  # Adjust precision as needed
+    coeff_str = f"{coefficient:.5g}"  # Adjust precision as needed
     # Format variable and exponent
     if exponent == 0:
         return f"{coeff_str}"
     elif exponent == 1:
-        return f"{coeff_str}{variable}"
+        return f"{coeff_str}*{variable}"
     else:
-        return f"{coeff_str}{variable}^{exponent}"
+        return f"{coeff_str}*{variable}^{exponent}"
 
 
 # Example usage:
 if __name__ == "__main__":
     # Input
-    ranges = [(1000, 10000), (0, 1), (10, 200)]
-    coefficients = [0.8, 1, 1.7]
-    exponents = [1.5, 0.8, 1]
+    ranges = [(7 * 2, 20 * 24), (0, 20), (0.5, 4), (0, 1), (0, 1), (0, 1)]
+    coefficients = [0.5, 1.2, 0.5, 1, 1, 0.6]
+    exponents = [1, 1, 1.2, 1.5, 1, 1]
+    value_labels = ["t", "m", "e", "k", "f", "c"]
 
     # Perform normalization
     try:
         normalized_coeffs, normalized_exponents = normalize_polynomial(
-            ranges, coefficients, exponents
+            ranges, coefficients, exponents, value_labels
         )
     except ValueError as e:
         print(f"Error: {e}")
 
-    mid_values = [5000, 0.5, 90]
-    min_values = [1000, 0, 10]
-    max_values = [10000, 1, 200]
-    values = [5000, 0, 200]
-    factors = [
-        (value - range[0]) / (range[1] - range[0])
-        for value, range in zip(values, ranges)
-    ]
-    print(f"Factors: {factors}")
+    # mid_values = [5000, 0.5, 90]
+    # min_values = [1000, 0, 10]
+    # max_values = [10000, 1, 200]
+    # values = [5000, 0, 200]
+    # factors = [
+    #     (value - range[0]) / (range[1] - range[0])
+    #     for value, range in zip(values, ranges)
+    # ]
+    # print(f"Factors: {factors}")
+    # # print factors in a human readable format trimming to 5 significative digits
+    # print(f"Factors: {[f'{factor:.5g}' for factor in factors]}")
