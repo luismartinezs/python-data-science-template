@@ -1,1 +1,6 @@
-numpy==1.26.4
+numpy==2.1.1
+deap==1.4.1
+gymnasium==1.0.0a2
+matplotlib==3.9.2
+networkx==3.2.1
+pulp==2.7.0
