@@ -1,5 +1,26 @@
 import numpy as np
 
+# Configuration
+ITERATIONS = 1000
+FAILURE_PENALTY = -100
+
+STRATEGIES = [
+    {
+        "cost_factor": 10,
+        "cost_uncertainty": 2,
+        "time_factor": 5,
+        "time_uncertainty": 1,
+        "success_rate": 0.9,
+    },
+    {
+        "cost_factor": 50,
+        "cost_uncertainty": 10,
+        "time_factor": 50,
+        "time_uncertainty": 10,
+        "success_rate": 0.9,
+    },
+]
+
 
 # Example: Random probabilistic response from the environment
 def environment_response(action_params):
@@ -36,7 +57,7 @@ def agent_action(strategy):
     return action_params
 
 
-def simulate_strategy(strategy, iterations=1000):
+def simulate_strategy(strategy, iterations=ITERATIONS):
     total_reward = 0
     for i in range(iterations):
         # Agent takes an action (sends strategy to the environment)
@@ -49,7 +70,7 @@ def simulate_strategy(strategy, iterations=1000):
         if response["is_successful"]:
             reward = response["cost_reduction"] + response["time_reduction"]
         else:
-            reward = -100  # Penalty for failure
+            reward = FAILURE_PENALTY  # Penalty for failure
 
         total_reward += reward
 
@@ -57,24 +78,7 @@ def simulate_strategy(strategy, iterations=1000):
     return average_reward
 
 
-strategies = [
-    {
-        "cost_factor": 10,
-        "cost_uncertainty": 2,
-        "time_factor": 5,
-        "time_uncertainty": 1,
-        "success_rate": 0.9,
-    },
-    {
-        "cost_factor": 50,
-        "cost_uncertainty": 10,
-        "time_factor": 50,
-        "time_uncertainty": 10,
-        "success_rate": 0.9,
-    },
-]
-
 # Run simulations for each strategy
-for strategy in strategies:
+for strategy in STRATEGIES:
     avg_reward = simulate_strategy(strategy)
     print(f"Strategy {strategy} => Average Reward: {avg_reward}")
