@@ -344,6 +344,44 @@ class ClassName:
 obj = ClassName(arg1, arg2)
 ```
 
+### `@classmethod` Example: Alternative Constructor
+
+```python
+class Car:
+	default_setups = {
+		'sedan': {'seats': 5, 'doors': 4, 'fuel': 'petrol'},
+		'suv': {'seats': 7, 'doors': 5, 'fuel': 'diesel'}
+	}
+
+	def __init__(self, seats, doors, fuel):
+		self.seats = seats
+		self.doors = doors
+		self.fuel = fuel
+
+	@classmethod
+	def from_model(cls, model):
+		setup = cls.default_setups.get(model)
+		if not setup:
+			raise ValueError(f"No setup for '{model}'")
+		return cls(**setup)
+```
+
+**Usage:** `car = Car.from_model('suv')`
+
+---
+
+### `@staticmethod` Example: Utility Function
+
+```python
+class BankAccount:
+	@staticmethod
+	def calculate_interest(amount, rate):
+		return amount * rate / 100
+```
+
+**Usage:** `interest = BankAccount.calculate_interest(1000, 5)`
+
+
 ### **Inheritance**
 
 ```python
@@ -662,6 +700,7 @@ print(add(5, 3))
 
   ```python
   squares = [x**2 for x in range(10)]
+  even_squares = [x**2 for x in range(10) if x % 2 == 0]
   ```
 
 - **Dictionary Comprehension:**
@@ -766,6 +805,48 @@ with MyContextManager() as manager:
   ```python
   for item1, item2 in zip(list1, list2):
       print(item1, item2)
+  ```
+
+- **Enumerate** – Iterate with index:
+  ```python
+  fruits = ['apple', 'banana', 'cherry']
+
+  for index, value in enumerate(fruits):
+      print(index, value)
+
+  # Output:
+  # 0 apple
+  # 1 banana
+  # 2 cherry
+  ```
+
+- **Zip** – Iterate over multiple iterables in parallel:
+  ```python
+  names = ['Alice', 'Bob', 'Charlie']
+  scores = [85, 92, 78]
+
+  for name, score in zip(names, scores):
+      print(name, score)
+
+  # Output:
+  # Alice 85
+  # Bob 92
+  # Charlie 78
+  ```
+
+- **Enumerate with Zip** – Indexed iteration over zipped lists:
+  ```python
+  colors = ['red', 'green', 'blue']
+  codes = ['R', 'G', 'B']
+
+  for index, (color, code) in enumerate(zip(colors, codes)):
+      print(index, color, code)
+
+  # Output:
+  # 0 red R
+  # 1 green G
+  # 2 blue B
+  ```
   ```
 
 ### **Unpacking**
