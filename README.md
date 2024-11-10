@@ -56,3 +56,18 @@
   - Multithreading and multiprocessing
   - Advanced OOP concepts like metaclasses
   - Networking and sockets programming
+
+
+# Project structure
+
+- workflows: Structured sequences of tasks where multiple LLM agents and tools interact to achieve a goal, often involving complex processing and decision-making. These workflows coordinate various agents, data sources, and actions
+
+- agents: Autonomous or semi-autonomous entities that perform specific tasks within an LLM workflow. Each agent is designed for a particular function, like summarizing text, making decisions, or calling APIs
+
+- prompts: Concise instructions given directly to an LLM to generate a response. These are typically single requests without complex task coordination or multiple agents involved, focusing on clarity and brevity
+
+- config.py: Configuration for the whole project
+
+- scripts: Scripts for running workflows, agents, prompts, etc
+
+NOTE: there are lots of files and folders just floating around that should be cleaned up

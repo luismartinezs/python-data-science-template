@@ -1,0 +1,22 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from prompts import spr_generator, spr_decompressor
+
+compressed = spr_generator(
+    """Donald John Trump (born June 14, 1946) is an American politician, media personality, and businessman who served as the 45th president of the United States from 2017 to 2021. A member of the Republican Party, he is the president-elect after winning the 2024 presidential election. His inauguration as the 47th president is scheduled for January 20, 2025.
+
+Born in New York City, Trump graduated with a bachelor's degree in economics from the University of Pennsylvania in 1968. After becoming president of the family real estate business in 1971, Trump renamed it the Trump Organization and reoriented the company toward building and renovating skyscrapers, hotels, casinos, and golf courses. After a series of business failures in the late 1990s, he launched side ventures, mostly licensing the Trump name. From 2004 to 2015, he produced and hosted the reality television series The Apprentice. He and his businesses have been involved in more than 4,000 legal actions, including six business bankruptcies.
+
+Trump won the 2016 presidential election as the Republican Party nominee, defeating the Democratic Party candidate, Hillary Clinton, while losing the popular vote,[a] and became the first U.S. president without prior military or government service. The Mueller investigation later determined that Russia interfered in the 2016 election to help Trump. His campaign positions were described as populist, protectionist, and nationalist. His election and policies sparked numerous protests and led to the creation of a political movement and a cult of personality.[b] Trump promoted conspiracy theories and made many false and misleading statements during his campaigns and presidency, to a degree unprecedented in American politics. Many of his comments and actions have been characterized as racially charged, racist, and misogynistic.
+
+In his first term, Trump ordered a travel ban on citizens from several Muslim-majority countries, diverted military funding toward building a wall on the U.S.–Mexico border, and implemented a family separation policy. He rolled back more than 100 environmental policies and regulations and signed the Tax Cuts and Jobs Act of 2017, which cut taxes and eliminated the individual mandate penalty of the Affordable Care Act. He appointed Neil Gorsuch, Brett Kavanaugh, and Amy Coney Barrett to the U.S. Supreme Court. He reacted slowly to the COVID-19 pandemic, ignored or contradicted recommendations from health officials, used political pressure to interfere with testing efforts, and spread unverified information about unproven treatments. Trump initiated a trade war with China and withdrew the U.S. from the proposed Trans-Pacific Partnership trade agreement, the Paris Agreement on climate change, and the Iran nuclear deal. He met with North Korean leader Kim Jong Un three times, but made no progress on denuclearization. After his first term, scholars and historians ranked Trump one of the worst presidents in American history.
+
+Trump lost the 2020 presidential election to Democrat Joe Biden but refused to concede, falsely claiming widespread electoral fraud and attempting to overturn the results. On January 6, 2021, Trump urged his supporters to march to the U.S. Capitol, which many of them attacked. He is the only U.S. president to have been impeached twice: in 2019 for abuse of power and obstruction of Congress after he pressured Ukraine to investigate Biden, and in 2021 for incitement of insurrection; the Senate acquitted him in both cases. In 2024, a New York jury found him guilty of falsifying business records related to a hush money payment to Stormy Daniels, making him the first U.S. president to be convicted of a felony. Trump faced more felony indictments related to his alleged mishandling of classified documents and interference in the 2020 election, and he was found liable in civil trials for sexual abuse, defamation, and financial fraud.
+
+After leaving office, Trump continued to dominate the Republican Party. He became its nominee again in the 2024 presidential election and defeated Democratic candidate, incumbent vice president Kamala Harris, winning both the popular and electoral college vote. He became the second president in U.S. history after Grover Cleveland to be elected to non-consecutive terms"""
+)
+
+decompressed = spr_decompressor(compressed)
