@@ -5,13 +5,11 @@ from typing import List
 ell.init(store="./logdir")
 
 
-@ell.complex(model="gpt-4o-mini")
-def agent_name(input_param: str) -> List[Message]:
-    """You are an [AGENT_TYPE] assistant. [AGENT_DESCRIPTION]"""
-    return [ell.user(f"[AGENT_PROMPT]\n\n{input_param}")]
+class Agent:
+    def __init__(self, description):
+        self.description = description
 
-
-agent_name.description = "[AGENT_DESCRIPTION]"
-agent_name.arguments = [
-    {"name": "input_param", "type": "str", "description": "[PARAMETER_DESCRIPTION]"}
-]
+    @ell.complex(model="gpt-4o-mini")
+    def query_llm(self, input_param: str) -> List[Message]:
+        """You are an [AGENT_TYPE] assistant. [AGENT_DESCRIPTION]"""
+        return [ell.user(f"You are a helpful assistant\n\n{input_param}")]

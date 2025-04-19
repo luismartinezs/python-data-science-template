@@ -1,0 +1,87 @@
+Calls to LLM models use the ell python library.
+
+These are examples of usage:
+
+[EXAMPLES]
+
+Basic Prompt:
+
+```py
+@ell.complex(model="gpt-4")
+def generate_story(prompt: str) -> List[Message]:
+    '''You are a creative story writer''' # System prompt
+    return [
+        ell.user(f"Write a short story based on this prompt: {prompt}")
+    ]
+
+story : ell.Message = generate_story("A robot discovers emotions")
+print(story.text)  # Access the text content of the last message
+```
+
+Multi-turn Conversation:
+
+```py
+@ell.complex(model="gpt-4")
+def chat_bot(message_history: List[Message]) -> List[Message]:
+    return [
+        ell.system("You are a helpful assistant."),
+    ] + message_history
+
+conversation = [
+    ell.user("Hello, who are you?"),
+    ell.assistant("I'm an AI assistant. How can I help you today?"),
+    ell.user("Can you explain quantum computing?")
+]
+response : ell.Message = chat_bot(conversation)
+print(response.text)  # Print the assistant's response
+```
+
+Tool Usage:
+
+```py
+@ell.tool()
+def get_weather(location: str) -> str:
+    # Implementation to fetch weather
+    return f"The weather in {location} is sunny."
+
+@ell.complex(model="gpt-4", tools=[get_weather])
+def weather_assistant(message_history: List[Message]) -> List[Message]:
+    return [
+        ell.system("You are a weather assistant. Use the get_weather tool when needed."),
+    ] + message_history
+
+conversation = [
+    ell.user("What's the weather like in New York?")
+]
+response : ell.Message = weather_assistant(conversation)
+
+if response.tool_calls:
+    tool_results = response.call_tools_and_collect_as_message()
+    print("Tool results:", tool_results.text)
+
+    # Continue the conversation with tool results
+    final_response = weather_assistant(conversation + [response, tool_results])
+    print("Final response:", final_response.text)
+```
+
+Structured Output:
+
+```py
+from pydantic import BaseModel
+
+class PersonInfo(BaseModel):
+    name: str
+    age: int
+
+@ell.complex(model="gpt-4", response_format=PersonInfo)
+def extract_person_info(text: str) -> List[Message]:
+    return [
+        ell.system("Extract person information from the given text."),
+        ell.user(text)
+    ]
+
+text = "John Doe is a 30-year-old software engineer."
+result : ell.Message = extract_person_info(text)
+person_info = result.parsed
+print(f"Name: {person_info.name}, Age: {person_info.age}")
+```
