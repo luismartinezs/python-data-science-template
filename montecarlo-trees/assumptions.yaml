@@ -1,0 +1,6 @@
+base_demand: 10000        # units / month
+base_price:  9.5          # USD
+mu:    [0, 0]             # drift of log-shocks
+sigma: [0.2, 0.15]        # volatilities
+corr:  [[1,  -0.3],       # corr matrix (demand, price)
+        [-0.3, 1]]
