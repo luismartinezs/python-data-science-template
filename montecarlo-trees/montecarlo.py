@@ -3,7 +3,7 @@ import sys, yaml, json, pathlib, numpy as np, pandas as pd, matplotlib.pyplot as
 
 runs      = int(sys.argv[sys.argv.index('--runs') + 1])
 params    = yaml.safe_load(open(sys.argv[-1]))
-months    = 12
+months    = 1
 
 # 1. Correlated shocks ---------------------------------------------------------
 mu   = np.array(params['mu'])               # e.g. [0, 0] for demand & price
